@@ -1,0 +1,30 @@
+import random
+import json
+with open('DicionarioPokemons.json') as arquivo: 
+	DicPKM=json.load(arquivo)
+with open('ListaPokemonString.json') as arquivo1:
+	PKMstr=json.load(arquivo1)
+print ("Bem vindo ao incrível mundo de inspermon! Eu sou o Professor Sequoia!")
+Nome_jogador=input("Qual seu nome?")
+print ("Muito bem, {0}! Agora escolha um pokemon!" .format(Nome_jogador))
+PokemonInicial= int(input("0-Bulbasaur\n1-Charmander\n2-Squirtle"))
+while PokemonInicial >= 3:
+	PokemonInicial= int(input("1-Bulbasaur\n2-Charmander\n3-Squirtle"))
+if PokemonInicial==1:
+	print ("Por quê eu ainda pergunto....")
+if PokemonInicial==0 or PokemonInicial==2:
+	print("Então você escolhe o charm...")
+	print("Bom a escolha é sua. Boa sorte no mundo sem um charizard.")
+#colocar aqui os pokemons obtido(s)
+O_que_fazer=int(input("O que você que fazer agora,{0}? Ir batalhar(0) ou vizitar o centro pokemon(1)" .format(Nome_jogador)))
+while O_que_fazer >=2:
+        O_que_fazer=int(input("O que você que fazer agora,{0}? Ir batalhar(0) ou vizitar o centro pokemon(1)" .format(Nome_jogador)))
+if O_que_fazer==1:
+	print ("♪♫Tan Tan tananan♪♫") 
+if O_que_fazer==0:
+	print ("♫Tan tan tan tan tan tan tanana nanan nan tanana nana nan turu....♫")
+	Gerador_PKM_Selvagem= random.randint(0,148)
+	Pokemon_Selvagem=PKMstr[Gerador_PKM_Selvagem]
+	AçãoNaBatalha=int(input("Um {0} apareceu! O que fazer?\nAtacar(0), Fugir(1)" .format(Pokemon_Selvagem)))
+if AçãoNaBatalha==1:
+        O_que_fazer=int(input("O que você que fazer agora,{0}? Ir batalhar(0) ou vizitar o centro pokemon(1)" .format(Nome_jogador)))
