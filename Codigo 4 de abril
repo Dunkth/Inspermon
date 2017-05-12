@@ -1,0 +1,101 @@
+import random
+import json
+import os
+with open('DicionarioPokemons.json') as arquivo: 
+	DicPKM=json.load(arquivo)
+with open('ListaPokemonString.json') as arquivo1:
+	PKMstr=json.load(arquivo1)
+#___________________________________________________________________________________________________________________________________#
+
+#                                                                 #VARIAVEIS#
+PokeBelt=[]
+Golpe=40
+#___________________________________________________________________________________________________________________________________#
+
+#                                                           #DEFINIÇÃO DAS FUNÇÕES#
+def FunçãoHPpokebelt():
+	FHPPb=((2*(DicPKM[PokeBelt[0]])[0]*50)/100)+50+10  #zero pq o pokebelt só tem 1 pokemon 50 pelo nivel
+	#print (FHPPb)
+	return FHPPb
+def FunçãoOutrosStatsPokebelt(Stat):
+	FSTPb=((2*(DicPKM[PokeBelt[0]])[Stat]*50)/100)+5   #zero pq o pokebelt só tem 1 pokemon e 50 pelo nivel
+	#print(FSTPb)
+	return FSTPb
+def FunçãoHPSelvagem(PKMS):
+	FHPS=((2*(DicPKM[PKMS])[0]*50)/100)+50+10  #zero pq o pokebelt só tem 1 pokemon 50 pelo nivel
+	#print (FHPS)
+	return FHPS
+def FunçãoOutrosStatsSelvagem(PKMS,Stat):
+	FSTS=((2*(DicPKM[PKMS])[Stat]*50)/100)+5   #zero pq o pokebelt só tem 1 pokemon e 50 pelo nivel
+	#print (FSTS)
+	return FSTS
+def FunçãoDanoCalculado(AtkAgro,DefVitima,Golpe):
+	Damage = ((((2*50/5+2)*AtkAgro*Golpe/DefVitima)/50)+2)*random.randint(85,100)/(100)#*STAB*Weakness/Resistance
+#                  ^^
+#       Nível do pokemon que ataca
+	return Damage
+def Batalha():
+	AçãoNaBatalha=int(input("Um {0} apareceu! O que fazer?\nAtacar(0), Fugir(1)" .format(Pokemon_Selvagem)))
+	if AçãoNaBatalha==0:
+		os.system('cls')
+		if StatusPKMBatalhaSelvagem[5] <= StatusPKMBatalha[5]:
+			DeltaHPS=int(FunçãoDanoCalculado(StatusPKMBatalha[1],StatusPKMBatalhaSelvagem[2],Golpe))
+			StatusPKMBatalhaSelvagem[0]=StatusPKMBatalhaSelvagem[0]-DeltaHPS
+			print ( "{0} causou {1} de dano!".format(PokeBelt[0],DeltaHPS))
+			if StatusPKMBatalhaSelvagem[0] <=0:
+				break
+			DeltaHPPb=int(FunçãoDanoCalculado(StatusPKMBatalhaSelvagem[1],StatusPKMBatalha[2],Golpe))
+			StatusPKMBatalha[0]=StatusPKMBatalha[0]-DeltaHPPb
+			print ( "{0} causou {1} de dano!".format(Pokemon_Selvagem,DeltaHPPb))
+		if StatusPKMBatalhaSelvagem[5] > StatusPKMBatalha[5]:
+			DeltaHPPb=int(FunçãoDanoCalculado(StatusPKMBatalhaSelvagem[1],StatusPKMBatalha[2],Golpe))
+			StatusPKMBatalha[0]=StatusPKMBatalha[0]-DeltaHPPb
+			print ( "{0} causou {1} de dano!".format(Pokemon_Selvagem,DeltaHPPb))
+			if StatusPKMBatalha[0]<=0:
+				break
+			DeltaHPS=int(FunçãoDanoCalculado(StatusPKMBatalha[1],StatusPKMBatalhaSelvagem[2],Golpe))
+			StatusPKMBatalhaSelvagem[0]=StatusPKMBatalhaSelvagem[0]-DeltaHPS
+			print ( "{0} causou {1} de dano!".format(PokeBelt[0],DeltaHPS))
+def PokeCenter():
+	print ("♪♫Tan Tan tananan♪♫") 
+#____________________________________________________________________________________________________________________________________#
+#                                                      #INTRODUÇÃO E ESCOLHA DO INICIAL#
+
+print ("Bem vindo ao incrível mundo de inspermon! Eu sou o Professor Sequoia!")
+Nome_jogador=input("Qual seu nome?")
+os.system('cls')
+print ("Muito bem, {0}! Agora escolha um pokemon!" .format(Nome_jogador))
+PokemonInicial= int(input("0-Bulbasaur\n1-Charmander\n2-Squirtle"))
+while PokemonInicial >= 3:
+	os.system('cls')
+	PokemonInicial= int(input("1-Bulbasaur\n2-Charmander\n3-Squirtle"))
+if PokemonInicial==1:
+	print ("Por quê eu ainda pergunto....")
+if PokemonInicial==0 or PokemonInicial==2:
+	print("Então você escolhe o charm...")
+	print("Bom a escolha é sua. Boa sorte no mundo sem um charizard.")
+PokeBelt.append(PKMstr[PokemonInicial])
+#__________________________________________________________________________________________________________________________________#
+#     
+O_que_fazer=100                                                   #COMEÇO DOS LOOPINGS#
+while O_que_fazer !=int(2):
+	os.system('cls')
+	O_que_fazer=int(input("O que você que fazer agora,{0}? Ir batalhar(0) , visitar o centro pokemon(1) , sair(2)" .format(Nome_jogador)))
+	if O_que_fazer==1:
+		PokeCenter()
+	if O_que_fazer==0:
+		os.system('cls')
+		#PokemonNaBatalha=[int(FunçãoHPpokebelt()),int(FunçãoOutrosStatsPokebelt(1)),FunçãoOutrosStatsPokebelt(2),int(FunçãoOutrosStatsPokebelt(3)),int(FunçãoOutrosStatsPokebelt(4)),int(FunçãoOutrosStatsPokebelt(5))]
+	#print (PokemonNaBatalha)
+	StatusPKMBatalha=[int(FunçãoHPpokebelt()),int(FunçãoOutrosStatsPokebelt(1)),int(FunçãoOutrosStatsPokebelt(2)),int(FunçãoOutrosStatsPokebelt(3)),int(FunçãoOutrosStatsPokebelt(4)),int(FunçãoOutrosStatsPokebelt(5))]
+	#print (StatusPKMBatalha)
+	print ("♫Tan tan tan tan tan tan tanana nanan nan tanana nana nan turu....♫")
+	Gerador_PKM_Selvagem= random.randint(0,4)
+	Pokemon_Selvagem=PKMstr[Gerador_PKM_Selvagem]
+	print (Pokemon_Selvagem)
+	#PokemonNaBatalhaSelvagem=[int(FunçãoHPSelvagem()),int(FunçãoOutrosStatsSelvagem(1)),FunçãoOutrosStatsSelvagem(2),int(FunçãoOutrosStatsSelvagem(3)),int(FunçãoOutrosStatsSelvagem(4)),int(FunçãoOutrosStatsSelvagem(5))]
+	#print (PokemonNaBatalhaSelvagem)
+	StatusPKMBatalhaSelvagem=[int(FunçãoHPSelvagem(Pokemon_Selvagem)),int(FunçãoOutrosStatsSelvagem(Pokemon_Selvagem,1)),int(FunçãoOutrosStatsSelvagem(Pokemon_Selvagem,2)),int(FunçãoOutrosStatsSelvagem(Pokemon_Selvagem,3)),int(FunçãoOutrosStatsSelvagem(Pokemon_Selvagem,4)),int(FunçãoOutrosStatsSelvagem(Pokemon_Selvagem,5))]
+	#print (StatusPKMBatalhaSelvagem)
+		while StatusPKMBatalhaSelvagem[0] > 0 or StatusPKMBatalha[0]>0 or AçãoNaBatalha!=1:
+			Batalha()
